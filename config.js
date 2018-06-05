@@ -34,6 +34,7 @@ class FlowRunner {
                     fail: reject();
                 }).then((next) => {
                     this.currentItem++;
+                    this.runCurrentStep();
                     next: resolve();
                 })
             }))
