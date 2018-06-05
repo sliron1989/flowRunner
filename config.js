@@ -1,5 +1,5 @@
-const request = require('request-promise')
-
+const request = require('request-promise');
+const Promise = require('bluebird');
 [{
     url: '',
     params: {},
@@ -29,7 +29,14 @@ class FlowRunner {
             qs: item.params
         }
         request(options).then((res) => {
-
+            item.onResponse(null, res, (() => {
+                return new Promise((resolve, reject) => {}).catch((fail) => {
+                    fail: reject();
+                }).then((next) => {
+                    this.currentItem++;
+                    next: resolve();
+                })
+            }))
         })
     }
 }
